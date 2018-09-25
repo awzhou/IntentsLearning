@@ -11,6 +11,7 @@ public class SendMessageActivity extends AppCompatActivity {
 
     private EditText editTextMessage;
     private Button buttonSendMessage;
+    private Button buttonShare;
 
     public static final String EXTRA_SENT_MESSAGE ="the message";
 
@@ -36,10 +37,26 @@ public class SendMessageActivity extends AppCompatActivity {
                 startActivity(intentSendMessage);
             }
         });
+
+        buttonShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // make an intent with the desired action
+                Intent intentShare = new Intent(Intent.ACTION_SEND);
+                // set the data type of the stuff we're packaging away
+                // can look up the type you need on the internet
+                intentShare.setType("text/plain");
+                // put the extra with the message
+                intentShare.putExtra(EXTRA_SENT_MESSAGE, editTextMessage.getText().toString());
+                // launch the activity
+                startActivity(intentShare);
+            }
+        });
     }
 
     private void wireWidgets() {
         editTextMessage = findViewById(R.id.editText_sendmessage_msg);
         buttonSendMessage = findViewById(R.id.button_sendmessage_send);
+        buttonShare = findViewById(R.id.button_sendmessage_share);
     }
 }
